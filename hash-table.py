@@ -17,7 +17,7 @@ class HashTable:
             else:
                 cur = cur.next
 
-    def hashFunction(self, content) -> int:
+    def hashFunction(self, content:any) -> int:
         md5 = hashlib.md5(content.encode(encoding='UTF-8')).hexdigest()
         index = math.floor(float.fromhex(md5[:1]))
         length = len(self.table) - 1
