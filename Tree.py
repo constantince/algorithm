@@ -7,19 +7,22 @@ class Node:
 class Tree:
     def __init__(self, root) -> None:
         self.root = Node(root)
+        return self.root
 
     def add(self, item):
-        node = Node(item)
-        cur = self.root
-        while cur is not None:
-            if cur.left is None:
-                cur.left = node
-                return
-            elif cur.right is None:
-                cur.right = node
-                return
+        if self.root:
+            if item < self.root.ele:
+                if self.root.right is None:
+                    self.root.right = Tree(item)
+                else:
+                    self.root.right.add(item)
+            elif item > self.root.ele:
+                if self.root.left is None:
+                    self.root.left = Tree(item)
+                else:
+                    self.root.left.add(item)
             else:
-                cur = cur.left
+                self.root = item
 
     def __str__(self) -> str:
         return str(self.root)
