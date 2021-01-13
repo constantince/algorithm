@@ -1,35 +1,59 @@
+# import queue
+
 class Node:
     def __init__(self, item) -> None:
-        self.ele = item
+        self.value = item
         self.left = None
         self.right = None
+        self.father = None
 
 class Tree:
     def __init__(self, root) -> None:
         self.root = Node(root)
-        return self.root
 
-    def add(self, item):
-        if self.root:
-            if item < self.root.ele:
-                if self.root.right is None:
-                    self.root.right = Tree(item)
-                else:
-                    self.root.right.add(item)
-            elif item > self.root.ele:
-                if self.root.left is None:
-                    self.root.left = Tree(item)
-                else:
-                    self.root.left.add(item)
+    def binary_tree_add(self, node):
+        queue = [self.root]
+        while queue:
+            cur = queue.pop(0)
+            if cur.left is None:
+                cur.left = node
+                node.father = cur
+                return
+            queue.append(cur.left)
+            if cur.right is None:
+                cur.right = node
+                node.father = cur
+                return
+            queue.append(cur.right)
+
+           
+    def search_tree_add(self, node):
+        father = None
+        cur = self.root
+ 
+        while cur != None:
+            if cur.value == node.value:
+                return -1
+            father = cur
+            if node.value < cur.value:
+                cur = cur.left
             else:
-                self.root = item
-
+                cur = cur.right
+        node.father = father
+        if father == None:
+            self.root = node
+        elif node.value < father.value:
+            father.left = node
+        else:
+            father.right = node
+        
+        
     def __str__(self) -> str:
         return str(self.root)
 
 if __name__ == "__main__":
-    tree = Tree("tree-root")
-    for i in range(1, 8):
-        tree.add(i)
+    tree = Tree(0)
+    for i in range(1, 20):
+        tree.binary_tree_add(Node(i))
 
-    print(tree)
+    print(tree.root)
