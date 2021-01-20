@@ -47,30 +47,58 @@ class Tree:
         else:
             father.right = node
         
-    def pre_order(self, node):
+    def pre_order(self, node, q):
         if node.left is not None: 
             print(node.left.value)
+            q.append(node.left)
         if node.right is not None:
             print(node.right.value)
+            q.append(node.right)
 
-        self.pre_order(node.left)
+    def in_order(self, node, q):
+        if node.right is not None: 
+            print(node.right.value)
+            q.append(node.right)
+        if node.left is not None:
+            print(node.left.value)
+            q.append(node.left)
+        pass
 
-    def search_tree_pre_order(self):
-        cur = self.root
-        if cur.left is not None: 
-            self.pre_order(cur.left)
+    def post_order(self):
+        pass
 
-        if cur.left is not None: 
-            self.pre_order(cur.right)
-
+    #前序遍历
+    def search_tree_pre_order(self, node):
+        if node is None:
+            return
+        print(node.value)
+        self.search_tree_pre_order(node.left)
+        self.search_tree_pre_order(node.right)
+       
+    #中序遍历
+    def search_tree_in_order(self, node):
+        if node is None:
+            return
+        self.search_tree_in_order(node.left)
+        print(node.value)
+        self.search_tree_in_order(node.right)
+        
+    #后序遍历
+    def search_tree_post_order(self, node):
+        if node is None:
+            return
+        self.search_tree_post_order(node.left)
+        self.search_tree_post_order(node.right)
+        print(node.value)
 
 
     def __str__(self) -> str:
         return str(self.root)
 
 if __name__ == "__main__":
-    tree = Tree(0)
-    for i in range(1, 12):
+    tree = Tree("A")
+    alt = ["B", "C", "D", "E", "F", "G"]
+    for i in alt:
         tree.binary_tree_add(Node(i))
 
-    tree.search_tree_pre_order()
+    tree.search_tree_pre_order(tree.root)
