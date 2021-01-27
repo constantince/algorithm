@@ -1,5 +1,8 @@
 # import queue
 
+from typing import Match
+
+
 class Node:
     def __init__(self, item) -> None:
         self.value = item
@@ -10,6 +13,7 @@ class Node:
 class Tree:
     def __init__(self, root) -> None:
         self.root = Node(root)
+        self.heap = [None, root]
     #!!!普通二叉树添加子节点
     def binary_tree_add(self, node):
         queue = [self.root]
@@ -91,10 +95,32 @@ class Tree:
         self.search_tree_post_order(node.right)
         print(node.value)
 
+    def heapily(self, node):
+        self.heap.append(node)
+        length = len(self.heap)
+        cur = length - 1
+        x = int(cur / 2)
+        if cur % 2 is not 0:
+            x = int((cur - 1) / 2)
+
+        while x > 0 and self.heap[cur] and self.heap[cur] > self.heap[x]:
+            self.swap(cur, x)
+            if x % 2 is not 0:
+                cur = int((x - 1) / 2)
+            else:
+                cur = int(x / 2)
+
+    def swap(self, old_index, new_index):
+        old = self.heap[old_index]
+        new = self.heap[new_index]
+        self.heap[old_index] = new
+        self.heap[new_index] = old
+
 
     def __str__(self) -> str:
         return str(self.root)
 
+#[None, 1,3,6,7,8,9,10,11, 4]
 if __name__ == "__main__":
     tree = Tree("A")
     alt = ["B", "C", "D", "E", "F", "G"]
@@ -102,3 +128,12 @@ if __name__ == "__main__":
         tree.binary_tree_add(Node(i))
 
     tree.search_tree_pre_order(tree.root)
+
+    heap = Tree(0)
+    alt = [3, 6, 1, 4, 11, 19, 5, 7]
+    for i in alt:
+        x = heap.heapily(i)
+    
+    print(heap.heap)
+    
+   
