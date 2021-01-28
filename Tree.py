@@ -95,20 +95,20 @@ class Tree:
         self.search_tree_post_order(node.right)
         print(node.value)
 
+    #判断插入的是左节点还是右节点
+    def l_o_r(self, target):
+        return int(target / 2 ) if target % 2 == 0 else int((target + 1) / 2)  
+
     def heapily(self, node):
         self.heap.append(node)
         length = len(self.heap)
-        cur = length - 1
-        x = int(cur / 2)
-        if cur % 2 is not 0:
-            x = int((cur - 1) / 2)
+        me = length - 1
+        father = self.l_o_r(me)
 
-        while x > 0 and self.heap[cur] and self.heap[cur] > self.heap[x]:
-            self.swap(cur, x)
-            if x % 2 is not 0:
-                cur = int((x - 1) / 2)
-            else:
-                cur = int(x / 2)
+        while father >= 0 and self.heap[me] > self.heap[father]:
+            self.swap(me, father)
+            me = father
+            father = self.l_o_r(me)
 
     def swap(self, old_index, new_index):
         old = self.heap[old_index]
@@ -120,7 +120,7 @@ class Tree:
     def __str__(self) -> str:
         return str(self.root)
 
-#[None, 1,3,6,7,8,9,10,11, 4]
+#[None, 7,5,6,4,2,1]
 if __name__ == "__main__":
     tree = Tree("A")
     alt = ["B", "C", "D", "E", "F", "G"]
@@ -130,10 +130,9 @@ if __name__ == "__main__":
     tree.search_tree_pre_order(tree.root)
 
     heap = Tree(0)
-    alt = [3, 6, 1, 4, 11, 19, 5, 7]
-    for i in alt:
-        x = heap.heapily(i)
-    
+    for i in [9, 4, 6, 7, 3, 1]:
+        heap.heapily(i)
+    heap.heapily(20)
     print(heap.heap)
     
    
