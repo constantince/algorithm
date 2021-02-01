@@ -95,27 +95,6 @@ class Tree:
         self.search_tree_post_order(node.right)
         print(node.value)
 
-    #判断插入的是左节点还是右节点
-    def l_o_r(self, target):
-        return int(target / 2 ) if target % 2 == 0 else int((target + 1) / 2)  
-
-    def heapily(self, node):
-        self.heap.append(node)
-        length = len(self.heap)
-        me = length - 1
-        father = self.l_o_r(me)
-
-        while father >= 0 and self.heap[me] > self.heap[father]:
-            self.swap(me, father)
-            me = father
-            father = self.l_o_r(me)
-
-    def swap(self, old_index, new_index):
-        old = self.heap[old_index]
-        new = self.heap[new_index]
-        self.heap[old_index] = new
-        self.heap[new_index] = old
-
 
     def __str__(self) -> str:
         return str(self.root)
@@ -128,11 +107,5 @@ if __name__ == "__main__":
         tree.binary_tree_add(Node(i))
 
     tree.search_tree_pre_order(tree.root)
-
-    heap = Tree(0)
-    for i in [9, 4, 6, 7, 3, 1]:
-        heap.heapily(i)
-    heap.heapily(20)
-    print(heap.heap)
     
    
