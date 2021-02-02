@@ -49,8 +49,10 @@ class Heap:
         self.heap[old_index] = new
         self.heap[new_index] = old
 
-    def delete(slef, node):
-        pass
+    def delete(self, node):
+        self.heap.remove(node)
+        tar = self.heap[len(self.heap) - 1]
+        self.heapily_from_top(tar)
 
 if __name__ == "__main__":
     heap = Heap(0)
@@ -63,4 +65,7 @@ if __name__ == "__main__":
 
 
     heap.heapily_from_top(8)
+    print(heap.heap)
+
+    heap.delete(9)
     print(heap.heap)
